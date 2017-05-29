@@ -4,19 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context="com.example.deepak.phonetics.MainActivity">
-
-    <TextView
-        android:id="@+id/Text_box"
-        android:layout_width="115dp"
-        android:layout_height="33dp"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.032" />
 
     <Button
         android:id="@+id/SMS_BTN"
@@ -32,23 +21,23 @@
         android:layout_height="56dp"
         android:text="Call Announcer"
         tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="179dp" />
+        tools:layout_editor_absoluteY="168dp" />
 
     <Button
         android:id="@+id/SET_BTN"
         android:layout_width="183dp"
         android:layout_height="51dp"
         android:text="Settings"
-        tools:layout_editor_absoluteX="121dp"
+        tools:layout_editor_absoluteX="118dp"
         tools:layout_editor_absoluteY="335dp" />
 
     <Button
         android:id="@+id/LAN_BTN"
         android:layout_width="159dp"
         android:layout_height="48dp"
+        android:onClick="Language_STN"
         android:text="Language"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="2dp"
-        android:onClick="Language_STN"/>
+        tools:layout_editor_absoluteX="209dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 </android.support.constraint.ConstraintLayout>

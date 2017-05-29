@@ -1,5 +1,6 @@
 package com.example.deepak.phonetics;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,10 +16,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Declare our Text Variables and assign them views from the layout
 
-        TextView answerLabel = (TextView) findViewById(R.id.Text_box);
+       // TextView answerLabel = (TextView) findViewById(R.id.Text_box);
         Button getAnswerButton = (Button) findViewById(R.id.LAN_BTN);
 
-      //  getAnswerButton.setOnClickListener();
+        getAnswerButton.setOnClickListener(new View.OnClickListener() {
+    public void onClick(View v) {
+        // Perform action on click
+       // MainActivity.setContentView(R.layout.language_setting);
+        Intent intent = new Intent(v.getContext(),Language_STN.class);
+        startActivityForResult(intent,0);
+    }
+        });
     }
 }
 
