@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:visibility="visible"
-    tools:context="com.example.deepak.phonetics.MainActivity">
+    android:background="@color/colorAccent"
+    tools:context="com.example.deepak.phonetics.MainActivity"
+    android:weightSum="1">
 
     <Button
-        android:id="@+id/SMS_BTN"
-        android:layout_width="179dp"
-        android:layout_height="53dp"
-        android:text="SMS Announcer"
-        tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="259dp" />
+        android:id="@+id/btn_call"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_weight="0.01"
+        android:text="Call Announcer" />
 
     <Button
-        android:id="@+id/CALL_BTN"
-        android:layout_width="175dp"
-        android:layout_height="56dp"
-        android:text="Call Announcer"
-        tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="168dp" />
+        android:id="@+id/btn_sms"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0.01"
+        android:text="SMS " />
 
     <Button
-        android:id="@+id/SET_BTN"
-        android:layout_width="183dp"
-        android:layout_height="51dp"
-        android:text="Settings"
-        tools:layout_editor_absoluteX="118dp"
-        tools:layout_editor_absoluteY="335dp" />
+        android:id="@+id/btn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0.01"
+        android:text="Settings" />
 
-    <Button
-        android:id="@+id/LAN_BTN"
-        android:layout_width="159dp"
-        android:layout_height="48dp"
-        android:onClick="Language_STN"
-        android:text="Language"
-        tools:layout_editor_absoluteX="209dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
