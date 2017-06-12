@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:fillViewport="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:background="@color/colorAccent"
+        tools:context="com.example.deepak.phonetics.MainActivity"
+        android:weightSum="5">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:visibility="visible"
-    android:background="@color/colorAccent"
-    tools:context="com.example.deepak.phonetics.MainActivity"
-    android:weightSum="1">
-
-    <Button
+        <Button
         android:id="@+id/btn_call"
         android:layout_width="match_parent"
         android:layout_height="76dp"
@@ -36,4 +41,10 @@
         android:layout_weight="0.01"
         android:text="Settings" />
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
+</ScrollView>
+
+
