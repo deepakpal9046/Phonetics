@@ -10,6 +10,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
@@ -32,12 +33,18 @@ public class PhoneCallReceiver extends BroadcastReceiver {
     private ITelephony telephonyService;
     String name="";
     TextToSpeech ttobj;
+    private  int mRingVolume;
+    TextToSpeech myTTS;
+    private  AudioManager mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
     @Override
     public void onReceive(Context context, Intent intent) {                                         // 2
         String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);                         // 3
         String msg = "Phone state changed to " + state;
 
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {                                   // 4
+
+            mRingVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_RING);
+            mAudioManager.setStreamMute(AudioManager.STREAM_RING,false);
             String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);  // 5
             msg += ". Incoming number is " + incomingNumber;
 
@@ -66,13 +73,18 @@ public class PhoneCallReceiver extends BroadcastReceiver {
 
 
         }
+        if(TelephonyManager.EXTRA_STATE_IDLE.equals(state))
+        {
+            mAudioManager.setStreamMute(AudioManager.STREAM_RING,true);
+            mAudioManager.setStreamVolume(AudioManager.STREAM_RING,mRingVolume,AudioManager.FLAG_ALLOW_RINGER_MODES);
+        }
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
 
     }
 
     public String getContactDisplayNameByNumber(String number,Context context) {
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        name = "Incoming call from";
+        name = "";
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor contactLookup = contentResolver.query(uri, null, null, null, null);
@@ -81,10 +93,6 @@ public class PhoneCallReceiver extends BroadcastReceiver {
             if (contactLookup != null && contactLookup.getCount() > 0) {
                 contactLookup.moveToNext();
                 name = contactLookup.getString(contactLookup.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
-                // this.id =
-                // contactLookup.getString(contactLookup.getColumnIndex(ContactsContract.Data.CONTACT_ID));
-                // String contactId =
-                // contactLookup.getString(contactLookup.getColumnIndex(BaseColumns._ID));
             }else{
                 name = "Unknown number";
             }

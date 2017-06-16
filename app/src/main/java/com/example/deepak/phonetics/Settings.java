@@ -51,7 +51,7 @@ public class Settings extends AppCompatActivity{
             //On click function
             public void onClick(View view) {
                 //Create the intent to start another activity
-                Intent intent = new Intent(view.getContext(), Settings.class);
+                Intent intent = new Intent(view.getContext(), TTSNotifierPreferences.class);
                 startActivity(intent);
             }
         });

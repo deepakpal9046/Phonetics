@@ -11,7 +11,7 @@ public class TTSNotifierLanguageEN extends TTSNotifierLanguage {
 
 	@Override
 	public String getTxtTest() {
-		return "hello";
+		return "Hello";
 	}
 
 	@Override

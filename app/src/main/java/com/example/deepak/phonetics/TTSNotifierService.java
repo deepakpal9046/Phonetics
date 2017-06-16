@@ -36,6 +36,7 @@ public class TTSNotifierService extends Service {
 
 	public volatile static TTSNotifierLanguage myLanguage = null;
 	public static final int MY_TTS_DATA_CHECK_CODE = 31337;
+	private static TextToSpeech  tts;
 
 	private static final String ACTION_PHONE_STATE = "android.intent.action.PHONE_STATE";
 	private static final String ACTION_SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
@@ -57,12 +58,12 @@ public class TTSNotifierService extends Service {
 	private volatile MediaPlayer myRingTonePlayer = null;
 	private volatile boolean stopRingtone = false;
 
-	private Context context;
-	private ServiceHandler mServiceHandler;
+	private Context context;	private TelephonyManager mTelephonyManager;
+
+    private ServiceHandler mServiceHandler;
 	private Looper mServiceLooper;
 	private SharedPreferences mPrefs;
 	private AudioManager mAudioManager;
-	private TelephonyManager mTelephonyManager;
 	private Thread mRingtoneThread;
 
 	// State
@@ -112,9 +113,9 @@ public class TTSNotifierService extends Service {
 	public void onDestroy() {
 		stopRingtone = true;
 		ttsReady = false;
-		if (myTts != null) 
-			myTts.shutdown();
-		myTts = null;
+		if (tts != null)
+			tts.shutdown();
+		tts = null;
 		if (myRingTonePlayer != null)
 			myRingTonePlayer.release();
 		myRingTonePlayer = null;
@@ -211,11 +212,13 @@ public class TTSNotifierService extends Service {
 		else 
 			myLanguage = new TTSNotifierLanguageEN();
 		setLanguageTts(myLanguage.getLocale());
-	} 
+	}
+
+
 
 	public static void setLanguageTts(Locale languageShortName) {
-		if (myTts != null) {
-			myTts.setLanguage(languageShortName);
+		if (tts != null) {
+			tts.setLanguage(languageShortName);
 		}		
 	}
 
@@ -261,7 +264,7 @@ public class TTSNotifierService extends Service {
 		try {
 			Thread.sleep(MEDIUM_THREADWAIT);
 		} catch (InterruptedException e) { }
-		while (myTts.isSpeaking()) {
+		while (tts.isSpeaking()) {
 			try {
 				Thread.sleep(MEDIUM_THREADWAIT);
 			} catch (InterruptedException e) { }
@@ -299,14 +302,14 @@ public class TTSNotifierService extends Service {
 			waitForRingTonePlayed();
 	}
 
-	public static void speak(String str, boolean waitForFinish) {
+/*	public static void speak(String str, boolean waitForFinish) {
 		Log.v("TTSNotifierService", "speak():" + myTts);
 		if (myTts == null) return;
 		waitForSpeechInitialised();
-		myTts.speak(str, 0, null);
+		tts.speak(str, 0, null);
 		if (waitForFinish)
 			waitForSpeechFinished();
-	}
+	} */
 
 	private void handleACTION_PHONE_STATE(Intent intent) {
 		if (!mPrefs.getBoolean("cbxEnableIncomingCall", true)) return;
@@ -327,8 +330,8 @@ public class TTSNotifierService extends Service {
 		// Logic
 		if (mRingtoneThread != null)
 			stopRingtone = true;
-		if (myTts != null)
-			myTts.stop();
+		if (tts != null)
+			tts.stop();
 		if (myRingTonePlayer != null) {
 			myRingTonePlayer.stop();
 			try {
@@ -384,7 +387,7 @@ public class TTSNotifierService extends Service {
 									}
 									break;
 								case 2:
-									speak(String.format(txtOptionsIncomingCall, getContactNameFromNumber(phoneNr, cbxOptionsIncomingCallUseNoteField)), true);
+									tts.speak(String.format(txtOptionsIncomingCall, getContactNameFromNumber(phoneNr, cbxOptionsIncomingCallUseNoteField)),TextToSpeech.QUEUE_FLUSH, null);
 									nrTTS += 1;
 									break;
 								case 3:
@@ -398,7 +401,7 @@ public class TTSNotifierService extends Service {
 								ringtoneState += 1;
 							}
 						} else {
-							speak(String.format(txtOptionsIncomingCall, getContactNameFromNumber(phoneNr, cbxOptionsIncomingCallUseNoteField)), true);
+							tts.speak(String.format(txtOptionsIncomingCall, getContactNameFromNumber(phoneNr, cbxOptionsIncomingCallUseNoteField)), TextToSpeech.QUEUE_FLUSH, null);
 						}
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
@@ -443,7 +446,7 @@ public class TTSNotifierService extends Service {
 				body = bodyText.toString();
 			}
 			String address = messages[0].getDisplayOriginatingAddress();
-			speak(String.format(txtOptionsIncomingSMS, getContactNameFromNumber(address, cbxOptionsIncomingSMSUseNoteField), body), true);
+			tts.speak(String.format(txtOptionsIncomingSMS, getContactNameFromNumber(address, cbxOptionsIncomingSMSUseNoteField), body), TextToSpeech.QUEUE_FLUSH, null);
 		}
 	}
 
@@ -455,7 +458,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsBatteryLowWarningText = mPrefs.getString("txtOptionsBatteryLowWarningText", myLanguage.getTxtOptionsBatteryLowWarningText());
 		else
 			txtOptionsBatteryLowWarningText = myLanguage.getTxtOptionsBatteryLowWarningText();
-		speak(txtOptionsBatteryLowWarningText, true);
+		tts.speak(txtOptionsBatteryLowWarningText,TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	public void handleACTION_MEDIA_BAD_REMOVAL(Intent intent) {
@@ -465,7 +468,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsMediaBadRemovalText = mPrefs.getString("txtOptionsMediaBadRemovalText", myLanguage.getTxtOptionsMediaBadRemovalText());
 		else
 			txtOptionsMediaBadRemovalText = myLanguage.getTxtOptionsMediaBadRemovalText();
-		speak(txtOptionsMediaBadRemovalText, true);
+		tts.speak(txtOptionsMediaBadRemovalText, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	public void handleACTION_BOOT_COMPLETED(Intent intent) { }
@@ -477,7 +480,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsProviderChangedText = mPrefs.getString("txtOptionsProviderChangedText", myLanguage.getTxtOptionsProviderChangedText());
 		else
 			txtOptionsProviderChangedText = myLanguage.getTxtOptionsProviderChangedText();
-		speak(txtOptionsProviderChangedText, true);
+		tts.speak(txtOptionsProviderChangedText,TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	@SuppressWarnings("unused")
@@ -489,7 +492,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsMediaMountedText = mPrefs.getString("txtOptionsMediaMountedText", myLanguage.getTxtOptionsMediaMountedText());
 		else
 			txtOptionsMediaMountedText = myLanguage.getTxtOptionsMediaMountedText();
-		speak(txtOptionsMediaMountedText, true);
+		tts.speak(txtOptionsMediaMountedText,TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	public void handleACTION_MEDIA_UNMOUNTED(Intent intent) {
@@ -499,7 +502,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsMediaUnMountedText = mPrefs.getString("txtOptionsMediaUnMountedText", myLanguage.getTxtOptionsMediaUnMountedText());
 		else
 			txtOptionsMediaUnMountedText = myLanguage.getTxtOptionsMediaUnMountedText();
-		speak(txtOptionsMediaUnMountedText, true);
+		tts.speak(txtOptionsMediaUnMountedText,TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	public void handleACTION_PICK_WIFI_NETWORK(Intent intent) {
@@ -512,7 +515,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsWifiDiscovered = myLanguage.getTxtOptionsWifiDiscovered();
 		// Logic
 		if (!cbxEnableWifiDiscovered) return;
-		speak(txtOptionsWifiDiscovered, true);	
+		tts.speak(txtOptionsWifiDiscovered,TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	private void handleACTION_WIFI_STATE_CHANGE(Intent intent) {
@@ -526,7 +529,7 @@ public class TTSNotifierService extends Service {
 		NetworkInfo ni = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 		if (ni == null) return;
 		if (cbxEnableWifiConnect && ni.getState() == NetworkInfo.State.CONNECTED)
-			speak(txtOptionsWifiConnected, true);
+			tts.speak(txtOptionsWifiConnected, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	private void handleSUPPLICANT_CONNECTION_CHANGE_ACTION(Intent intent) {
@@ -539,7 +542,7 @@ public class TTSNotifierService extends Service {
 			txtOptionsWifiDisconnected = myLanguage.getTxtOptionsWifiDisconnected();
 		// Logic
 		if (cbxEnableWifiDisconnect && !intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, true))
-			speak(txtOptionsWifiDisconnected, true);
+			tts.speak(txtOptionsWifiDisconnected, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	private String getContactNameFromNumber(String number, boolean useNote) {

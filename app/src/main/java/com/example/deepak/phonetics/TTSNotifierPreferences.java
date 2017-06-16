@@ -8,17 +8,20 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.speech.tts.TextToSpeech;
 
 public class TTSNotifierPreferences extends PreferenceActivity {
 
+    TextToSpeech myTTS;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final Activity ctx = this;
 		addPreferencesFromResource(R.xml.preferences);
-		if (!TTSDispatcher.isTtsBetaInstalled(this)) {
+
+		/*if (!TTSDispatcher.isTtsBetaInstalled(this)) {
 			TTSDispatcher.notifyTTSBeta(ctx);
-		}
+		} */
 		Intent svc = new Intent(this, TTSNotifierService.class);
 		startService(svc);
 		// Assign the buttons
@@ -29,12 +32,12 @@ public class TTSNotifierPreferences extends PreferenceActivity {
 				TTSNotifierService.waitForSpeechInitialised();
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 				TTSNotifierService.setLanguage(prefs.getBoolean("cbxChangeLanguage", false), prefs.getString("txtLanguage", "English"));
-				TTSNotifierService.speak(TTSNotifierService.myLanguage.getTxtTest(), false);
+				myTTS.speak(TTSNotifierService.myLanguage.getTxtTest(),TextToSpeech.QUEUE_FLUSH, null);
 				return true;
 			}
 		});
 		customPref = (Preference) findPreference("btnInstallTTSBeta");
-		if (TTSDispatcher.isTtsBetaInstalled(ctx)) {
+		/*if (TTSDispatcher.isTtsBetaInstalled(ctx)) {
 			customPref.setEnabled(false);
 		} else {
 			customPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -43,7 +46,7 @@ public class TTSNotifierPreferences extends PreferenceActivity {
 					return true;
 				}
 			});
-		}
+		} */
 		
 	}
 	

@@ -1,171 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="Enable / Disable">
-		<CheckBoxPreference android:title="Enable Phonetics Notifications"
-			android:defaultValue="true" android:summary="enable TTS notifications"
+		<CheckBoxPreference
+			android:title="Enable Phonetics Notifications"
+			android:defaultValue="true"
+			android:summary="enable TTS notifications"
 			android:key="cbxEnable" />
-		<CheckBoxPreference android:title="Incoming call"
-			android:defaultValue="true" android:summary="enable TTS on incoming call"
-			android:dependency="cbxEnable" android:key="cbxEnableIncomingCall" />
-		<CheckBoxPreference android:title="Incoming SMS"
-			android:defaultValue="true" android:summary="enable TTS on incoming SMS"
-			android:dependency="cbxEnable" android:key="cbxEnableIncomingSMS" />
-		<CheckBoxPreference android:title="Battery low"
-			android:defaultValue="true" android:summary="enable TTS on low battery warning"
-			android:dependency="cbxEnable" android:key="cbxEnableBatteryLow" />
+		<CheckBoxPreference
+			android:title="Incoming call"
+			android:defaultValue="true"
+			android:summary="enable TTS on incoming call"
+			android:dependency="cbxEnable"
+			android:key="cbxEnableIncomingCall" />
+		<CheckBoxPreference
+			android:title="Incoming SMS"
+			android:defaultValue="true"
+			android:summary="enable TTS on incoming SMS"
+			android:dependency="cbxEnable"
+			android:key="cbxEnableIncomingSMS" />
+		<CheckBoxPreference
+			android:title="Battery low"
+			android:defaultValue="true"
+			android:summary="enable TTS on low battery warning"
+			android:dependency="cbxEnable"
+			android:key="cbxEnableBatteryLow" />
 
-
-
-
-		<CheckBoxPreference android:title="Wifi discovered"
+		<CheckBoxPreference
+			android:title="Wifi discovered"
 			android:defaultValue="false"
 			android:summary="note: network notification should be enabled in Wireless controls"
-			android:dependency="cbxEnable" android:key="cbxEnableWifiDiscovered" />
-		<CheckBoxPreference android:title="Wifi connected"
-			android:defaultValue="false" android:summary="enable TTS when wifi is connected"
-			android:dependency="cbxEnable" android:key="cbxEnableWifiConnect" />
-		<CheckBoxPreference android:title="Wifi disconnected"
-			android:defaultValue="false" android:summary="enable TTS when wifi is disconnected"
-			android:dependency="cbxEnable" android:key="cbxEnableWifiDisconnect" />
+			android:dependency="cbxEnable"
+			android:key="cbxEnableWifiDiscovered" />
+		<CheckBoxPreference
+			android:title="Wifi connected"
+			android:defaultValue="false"
+			android:summary="enable TTS when wifi is connected"
+			android:dependency="cbxEnable"
+			android:key="cbxEnableWifiConnect" />
+		<CheckBoxPreference
+			android:title="Wifi disconnected"
+			android:defaultValue="false"
+			android:summary="enable TTS when wifi is disconnected"
+			android:dependency="cbxEnable"
+			android:key="cbxEnableWifiDisconnect" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options">
-		<Preference android:title="Test TTS"
+		<Preference
+			android:title="Test TTS"
 			android:summary="Test the text-to-speech for your language"
 			android:key="btnTestTTS" />
-		<CheckBoxPreference android:title="Change TTS language"
-			android:defaultValue="true" android:summary="change the TTS language"
+		<CheckBoxPreference
+			android:title="Change TTS language"
+			android:defaultValue="true"
+			android:summary="change the TTS language"
 			android:key="cbxChangeLanguage" />
-		<ListPreference android:title="Set TTS language"
-			android:summary="set the language" android:defaultValue="English"
-			android:key="txtLanguage" android:entries="@array/languages"
-			android:entryValues="@array/languages" android:dependency="cbxChangeLanguage" />
-		<CheckBoxPreference android:title="Change volume"
-			android:defaultValue="true" android:summary="change the volume when TTS speaks"
+		<ListPreference
+			android:title="Set TTS language"
+			android:summary="set the language"
+			android:defaultValue="English"
+			android:key="txtLanguage"
+			android:entries="@array/languages"
+			android:entryValues="@array/languages"
+			android:dependency="cbxChangeLanguage" />
+		<CheckBoxPreference
+			android:title="Change volume"
+			android:defaultValue="true"
+			android:summary="change the volume when TTS speaks"
 			android:key="cbxChangeVolume" />
-		<EditTextPreference android:title="TTS volume"
-			android:summary="set the volume (max 15)" android:defaultValue="14"
-			android:key="intOptionsTTSVolume" android:dependency="cbxChangeVolume" />
-		<CheckBoxPreference android:title="Obey silent mode"
-			android:defaultValue="true" android:summary="do not use TTS when phone is in silent mode"
+		<EditTextPreference
+            android:title="TTS volume"
+			android:summary="set the volume (max 15)"
+            android:defaultValue="14"
+			android:key="intOptionsTTSVolume"
+            android:dependency="cbxChangeVolume" />
+		<CheckBoxPreference
+            android:title="Obey silent mode"
+			android:defaultValue="true"
+            android:summary="do not use TTS when phone is in silent mode"
 			android:key="cbxObeySilentMode" />
-		<CheckBoxPreference android:title="Run with high priority"
+		<CheckBoxPreference
+            android:title="Run with high priority"
 			android:defaultValue="false"
 			android:summary="(only needed when using the 'Special TTS Ringtone mode'). Restart App!"
 			android:key="cbxRunWithHighPriority" />
-		<Preference android:title="Improve TTS"
+		<Preference
+            android:title="Improve TTS"
 			android:summary="Install 'eSpeak TTS' for improved TTS"
 			android:key="btnInstallTTSBeta" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for incoming call">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsIncomingCallUserDefinedText" />
-		<EditTextPreference android:summary="Set your own incoming call text"
-			android:defaultValue="Incoming call from %s" android:dependency="cbxOptionsIncomingCallUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsIncomingCall" />
-		<CheckBoxPreference android:title="Use special TTS Ringtone"
-			android:defaultValue="false" android:summary="[Ring] n times, [speech], Repeat"
+		<EditTextPreference
+            android:summary="Set your own incoming call text"
+			android:defaultValue="Incoming call from %s"
+            android:dependency="cbxOptionsIncomingCallUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsIncomingCall" />
+		<CheckBoxPreference
+            android:title="Use special TTS Ringtone"
+			android:defaultValue="false"
+            android:summary="[Ring] n times, [speech], Repeat"
 			android:key="cbxOptionsIncomingCallUseTTSRingtone" />
-		<RingtonePreference android:title="TTS Ringtone"
-			android:summary="Select a ringtone" android:key="txtOptionsIncomingCallRingtone"
+		<RingtonePreference
+            android:title="TTS Ringtone"
+			android:summary="Select a ringtone"
+            android:key="txtOptionsIncomingCallRingtone"
 			android:dependency="cbxOptionsIncomingCallUseTTSRingtone" />
-		<EditTextPreference android:title="Nr of rings before TTS"
+		<EditTextPreference
+            android:title="Nr of rings before TTS"
 			android:summary="minimal number of rings before TTS starts"
 			android:defaultValue="2"
 			android:key="intOptionsIncomingCallMinimalRingCountBeforeTTS"
 			android:dependency="cbxOptionsIncomingCallUseTTSRingtone" />
-		<EditTextPreference android:title="Set ringtone count after TTS"
+		<EditTextPreference
+            android:title="Set ringtone count after TTS"
 			android:summary="number of rings after TTS announcement"
-			android:defaultValue="2" android:key="intOptionsIncomingCallRingCountAfterTTS"
+			android:defaultValue="2"
+            android:key="intOptionsIncomingCallRingCountAfterTTS"
 			android:dependency="cbxOptionsIncomingCallUseTTSRingtone" />
-		<EditTextPreference android:title="Nr of TTS announcements"
+		<EditTextPreference
+            android:title="Nr of TTS announcements"
 			android:summary="set number of times the TTS will be invoked"
-			android:defaultValue="2" android:key="intOptionsIncomingCallTTSRepeats"
+			android:defaultValue="2"
+            android:key="intOptionsIncomingCallTTSRepeats"
 			android:dependency="cbxOptionsIncomingCallUseTTSRingtone" />
-		<EditTextPreference android:title="Milliseconds between rings"
+		<EditTextPreference
+            android:title="Milliseconds between rings"
 			android:summary="number of milliseconds between ringtone"
-			android:defaultValue="2" android:key="intOptionsIncomingCallDelayBetweenRingtones"
+			android:defaultValue="2"
+            android:key="intOptionsIncomingCallDelayBetweenRingtones"
 			android:dependency="cbxOptionsIncomingCallUseTTSRingtone" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for incoming SMS">
-		<CheckBoxPreference android:title="No body TTS"
+		<CheckBoxPreference
+            android:title="No body TTS"
 			android:defaultValue="true"
 			android:summary="Only announce the person sending, not the body of the message"
 			android:key="cbxOptionsIncomingSMSOnlyAnnouncePerson" />
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:dependency="cbxOptionsIncomingSMSOnlyAnnouncePerson"
 			android:key="cbxOptionsIncomingSMSUserDefinedText" />
 		<EditTextPreference
 			android:summary="Set your own incoming SMS (first %s is name, second %s is the body)"
 			android:defaultValue="New text message from %s about %s"
 			android:dependency="cbxOptionsIncomingSMSUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsIncomingSMS" />
+			android:title="Set speech text"
+            android:key="txtOptionsIncomingSMS" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for battery low warning">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsBatteryLowWarningUserDefinedText" />
-		<EditTextPreference android:summary="Set your own low battery warning text"
-			android:defaultValue="Your battery is low" android:dependency="cbxOptionsBatteryLowWarningUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsBatteryLowWarningText" />
+		<EditTextPreference
+            android:summary="Set your own low battery warning text"
+			android:defaultValue="Your battery is low"
+            android:dependency="cbxOptionsBatteryLowWarningUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsBatteryLowWarningText" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for media bad removal">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsMediaBadRemovalUserDefinedText" />
-		<EditTextPreference android:summary="Set your own media bad removal text"
+		<EditTextPreference
+            android:summary="Set your own media bad removal text"
 			android:defaultValue="Media removed before it was unmounted"
 			android:dependency="cbxOptionsMediaBadRemovalUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsMediaBadRemovalText" />
+			android:title="Set speech text"
+            android:key="txtOptionsMediaBadRemovalText" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for provider changed">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsProviderChangedUserDefinedText" />
-		<EditTextPreference android:summary="Set your own provider changed text"
-			android:defaultValue="Phone provider changed" android:dependency="cbxOptionsProviderChangedUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsProviderChangedText" />
+		<EditTextPreference
+            android:summary="Set your own provider changed text"
+			android:defaultValue="Phone provider changed"
+            android:dependency="cbxOptionsProviderChangedUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsProviderChangedText" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for Media mounted">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsMediaMountedUserDefinedText" />
 		<EditTextPreference
 			android:summary="Set your own Usb Mass Storage (Media) mounted text"
-			android:defaultValue="Media mounted" android:dependency="cbxOptionsMediaMountedUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsMediaMountedText" />
+			android:defaultValue="Media mounted"
+            android:dependency="cbxOptionsMediaMountedUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsMediaMountedText" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for Media unmounted">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsMediaUnMountedUserDefinedText" />
-		<EditTextPreference android:summary="Set your own Media unmounted text"
-			android:defaultValue="Media unmounted" android:dependency="cbxOptionsMediaUnMountedUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsMediaUnMountedText" />
+		<EditTextPreference
+            android:summary="Set your own Media unmounted text"
+			android:defaultValue="Media unmounted"
+            android:dependency="cbxOptionsMediaUnMountedUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsMediaUnMountedText" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for wifi discovered">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsWifiDiscoveredUserDefinedText" />
-		<EditTextPreference android:summary="Set your own Wifi discovered text"
-			android:defaultValue="New Wifi discovered" android:dependency="cbxOptionsWifiDiscoveredUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsWifiDiscovered" />
+		<EditTextPreference
+            android:summary="Set your own Wifi discovered text"
+			android:defaultValue="New Wifi discovered"
+            android:dependency="cbxOptionsWifiDiscoveredUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsWifiDiscovered" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for wifi connected">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsWifiConnectedUserDefinedText" />
-		<EditTextPreference android:summary="Set your own Wifi connected text"
-			android:defaultValue="Wifi connected" android:dependency="cbxOptionsWifiConnectedUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsWifiConnected" />
+		<EditTextPreference
+            android:summary="Set your own Wifi connected text"
+			android:defaultValue="Wifi connected"
+            android:dependency="cbxOptionsWifiConnectedUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsWifiConnected" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Extra options for wifi disconnected">
-		<CheckBoxPreference android:title="Use user-defined text"
-			android:defaultValue="false" android:summary="user-defined text will be used as the TTS"
+		<CheckBoxPreference
+            android:title="Use user-defined text"
+			android:defaultValue="false"
+            android:summary="user-defined text will be used as the TTS"
 			android:key="cbxOptionsWifiDisconnectedUserDefinedText" />
-		<EditTextPreference android:summary="Set your own Wifi disconnected text"
-			android:defaultValue="Wifi disconnected" android:dependency="cbxOptionsWifiDisconnectedUserDefinedText"
-			android:title="Set speech text" android:key="txtOptionsWifiDisconnected" />
+		<EditTextPreference
+            android:summary="Set your own Wifi disconnected text"
+			android:defaultValue="Wifi disconnected"
+            android:dependency="cbxOptionsWifiDisconnectedUserDefinedText"
+			android:title="Set speech text"
+            android:key="txtOptionsWifiDisconnected" />
 	</PreferenceCategory>
 </PreferenceScreen>

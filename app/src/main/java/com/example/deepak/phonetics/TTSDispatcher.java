@@ -31,9 +31,15 @@ public class TTSDispatcher {
         ttsInitListener = new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+                Log.v("TTSNotifierService", "TTS INIT DONE");
+                TTSNotifierService.setLanguageTts(TTSNotifierService.myLanguage.getLocale());
+                ttsInitListener.speak("", TextToSpeech.QUEUE_FLUSH, null);
+                TTSNotifierService.ttsReady = true;
                 if (status != TextToSpeech.ERROR) {
                     ttsInitListener.setLanguage(Locale.UK);
                 }
+             //   myTts = new TextToSpeech(context, ttsInitListener);
+                useOriginal = false;
             }
         });
 	/*	if (isTtsBetaInstalled(context)) {
@@ -88,7 +94,7 @@ public class TTSDispatcher {
 	
 	@SuppressWarnings({ "rawtypes", "unused" })
 	public static boolean isTtsInstalled(Context ctx) {
-		if (isTtsBetaInstalled(ctx)) return true;
+	//	if (isTtsBetaInstalled(ctx)) return true;
 		try {
 			String classToLoad = "android.speech.tts.TextToSpeech";
 		    Class<?> c = Class.forName(classToLoad, false, ctx.getClass().getClassLoader());
